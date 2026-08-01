@@ -12,57 +12,22 @@ close all
 
 if isfile('Balatro.exe')
     % Rename 'Balatro.exe' to 'Balatro.zip'
-    movefile('Balatro.exe','Balatro2.zip');
+    movefile('Balatro.exe','Balatro2.exe');
+end
+if isfile('Balatro2.exe')
+    copyfile('Balatro2.exe','Balatro2.zip');
 end
 if isfile('Balatro2.zip')
     % Unzip 'Balatro.zip'
-    unzip('Balatro2.zip');
+    unzip('Balatro2.zip','UnzipLocation');
 end
 delete Balatro2.zip
 
-%% open globals.lua
-globalsID = fopen('globals.lua','w');
-ix = 1;
-tline = fgetl(globalsID);
-globalsTxt{ix} = tline;
-while ischar(tline)
-    ix = ix+1;
-    tline = fgetl(globalsID);
-    globalsTxt{ix} = tline;
-end
-
-%% open cardarea.lua
-cardareaID = fopen('cardarea.lua','w');
-ix = 1;
-tline = fgetl(cardareaID);
-cardareaTxt{ix} = tline;
-while ischar(tline)
-    ix = ix+1;
-    tline = fgetl(cardareaID);
-    cardareaTxt{ix} = tline;
-end
-
-%% open game.lua
-gameID = fopen('game.lua','w');
-ix = 1;
-tline = fgetl(gameID);
-gameTxt{ix} = tline;
-while ischar(tline)
-    ix = ix+1;
-    tline = fgetl(gameID);
-    gameTxt{ix} = tline;
-end
-
-%% open misc.lua
-miscID = fopen('functions/misc_functions.lua','w');
-ix = 1;
-tline = fgetl(miscID);
-miscTxt{ix} = tline;
-while ischar(tline)
-    ix = ix+1;
-    tline = fgetl(miscID);
-    miscTxt{ix} = tline;
-end
+%% open files
+%globalsTxt = readlines('UnzipLocation/globals.lua');
+cardareaTxt = readlines('UnzipLocation/cardarea.lua');
+%gameTxt = readlines('UnzipLocation/game.lua');
+%miscTxt = readlines('UnzipLocation/functions/misc_functions.lua');
 
 %% changes
 % changing the scaling of the cards from 2.4 to 2.7 on lines 274 and 275
@@ -76,14 +41,23 @@ end
 % miscTxt{1761} = [miscTxt{1761} '*1.12'];
 % 
 % % remove rotation of the cards by setting the card.T.r values to 0.
-% cardareaTxt{439} = cardareaTxt{439}(1:28);
-% cardareaTxt{420} = cardareaTxt{420}(1:32);
+cardareaTxt{420} = cardareaTxt{420}(1:32);
+cardareaTxt{432} = [cardareaTxt{432}(1:27) '0'];
+cardareaTxt{439} = cardareaTxt{439}(1:28);
+cardareaTxt{454} = cardareaTxt{454}(1:28);
+cardareaTxt{469} = cardareaTxt{469}(1:28);
+cardareaTxt{484} = cardareaTxt{484}(1:28);
+cardareaTxt{512} = cardareaTxt{512}(1:28);
 
 % overwrite the default cards with the "Grandma mode" cards in resources
-movefile('resources/textures/1x/8BitDeck_opt2.png','resources/textures/1x/8BitDeck_opt2OLD.png')
-copyfile('BalatroGrandmaH1.png','resources/textures/1x/8BitDeck_opt2.png')
-movefile('resources/textures/2x/8BitDeck_opt2.png','resources/textures/2x/8BitDeck_opt2OLD.png')
-copyfile('BalatroGrandmaH2.png','resources/textures/2x/8BitDeck_opt2.png')
+movefile('UnzipLocation/resources/textures/1x/8BitDeck_opt2.png',...
+    'UnzipLocation/resources/textures/1x/8BitDeck_opt2OLD.png')
+copyfile('Images/BalatroGrandmaH1.png',...
+    'UnzipLocation/resources/textures/1x/8BitDeck_opt2.png')
+movefile('UnzipLocation/resources/textures/2x/8BitDeck_opt2.png',...
+    'UnzipLocation/resources/textures/2x/8BitDeck_opt2OLD.png')
+copyfile('Images/BalatroGrandmaH2.png',...
+    'UnzipLocation/resources/textures/2x/8BitDeck_opt2.png')
 
 %% write files
 
@@ -93,19 +67,15 @@ copyfile('BalatroGrandmaH2.png','resources/textures/2x/8BitDeck_opt2.png')
 %         fprintf(globalsID,'%s',globalsTxt{ix});
 %         break
 %     else
-%         fprintf(globalsID,'%s\n',globalsTxt{ix});
+%         fprintf(globalsID,'%s/n',globalsTxt{ix});
 %     end
 % end
 
 % cardarea
-% for ix = 1:(numel(cardareaTxt))
-%     if cardareaTxt{ix+1}==-1
-%         fprintf(cardareaID,'%s',cardareaTxt{ix});
-%         break
-%     else
-%         fprintf(cardareaID,'%s\n',cardareaTxt{ix});
-%     end
-% end
+cardareaID = fopen('UnzipLocation/cardarea.lua','w');
+for ii = 1:length(cardareaTxt)
+    fprintf(cardareaID,[cardareaTxt{ii} '\n']);
+end
 
 % game
 % for ix = 1:(numel(gameTxt))
@@ -113,7 +83,7 @@ copyfile('BalatroGrandmaH2.png','resources/textures/2x/8BitDeck_opt2.png')
 %         fprintf(gameID,'%s',gameTxt{ix});
 %         break
 %     else
-%         fprintf(gameID,'%s\n',gameTxt{ix});
+%         fprintf(gameID,'%s/n',gameTxt{ix});
 %     end
 % end
 
@@ -123,61 +93,53 @@ copyfile('BalatroGrandmaH2.png','resources/textures/2x/8BitDeck_opt2.png')
 %         fprintf(miscID,'%s',miscTxt{ix});
 %         break
 %     else
-%         fprintf(miscID,'%s\n',miscTxt{ix});
+%         fprintf(miscID,'%s/n',miscTxt{ix});
 %     end
 % end
 
 %% zip everything and create the exe
-
-zip('Balatro',{'engine',...
-    'functions',...
-    'localization',...
-    'resources',...
-    'version.jkr',...
-    'back.lua',...
-    'blind.lua',...
-    'card.lua',...
-    'card_character.lua',...
-    'cardarea.lua',...
-    'challenges.lua',...
-    'conf.lua',...
-    'game.lua',...
-    'globals.lua',...
-    'main.lua',...
-    'tag.lua'});
+fclose('all');
+zip('Balatro.zip','/*','UnzipLocation');
 movefile('Balatro.zip','Balatro.exe');
 
 
 %% close everything and delete leftover files
-% fclose to allow everything to be deleted
-fclose('all');
 
-% delete the given files
-delete('version.jkr','back.lua','blind.lua','card.lua',...
-    'card_character.lua','cardarea.lua','challenges.lua','conf.lua',...
-    'game.lua','globals.lua','main.lua','tag.lua');
+% delete everything in the UnzipLocation folder, there's probably a better
+% way to do this but this works
+delete('UnzipLocation/engine/*')
+rmdir UnzipLocation/engine
+delete('UnzipLocation/functions/*')
+rmdir UnzipLocation/functions
+delete('UnzipLocation/localization/*')
+rmdir UnzipLocation/localization
+delete('UnzipLocation/resources/fonts/*')
+rmdir UnzipLocation/resources/fonts
+delete('UnzipLocation/resources/shaders/*')
+rmdir UnzipLocation/resources/shaders
+delete('UnzipLocation/resources/sounds/*')
+rmdir UnzipLocation/resources/sounds
+delete('UnzipLocation/resources/textures/1x/collabs/*')
+rmdir UnzipLocation/resources/textures/1x/collabs
+delete('UnzipLocation/resources/textures/1x/*')
+rmdir UnzipLocation/resources/textures/1x
+delete('UnzipLocation/resources/textures/2x/collabs/*')
+rmdir UnzipLocation/resources/textures/2x/collabs
+delete('UnzipLocation/resources/textures/2x/*')
+rmdir UnzipLocation/resources/textures/2x
+rmdir UnzipLocation/resources/textures
+delete('UnzipLocation/resources/*')
+rmdir UnzipLocation/resources
+delete('UnzipLocation/*')
 
-% delete everything in the folders
-delete('engine\*')
-rmdir engine
-delete('functions\*')
-rmdir functions
-delete('localization\*')
-rmdir localization
-delete('resources\fonts\*')
-rmdir resources\fonts
-delete('resources\shaders\*')
-rmdir resources\shaders
-delete('resources\sounds\*')
-rmdir resources\sounds
-delete('resources\textures\1x\collabs\*')
-rmdir resources\textures\1x\collabs
-delete('resources\textures\1x\*')
-rmdir resources\textures\1x
-delete('resources\textures\2x\collabs\*')
-rmdir resources\textures\2x\collabs
-delete('resources\textures\2x\*')
-rmdir resources\textures\2x
-rmdir resources\textures
-delete('resources\*')
-rmdir resources
+%% Old
+%% open globals.lua
+% globalsID = fopen('UnzipLocation/globals.lua','w');
+% ix = 1;
+% tline = fgetl(globalsID);
+% globalsTxt{ix} = tline;
+% while ischar(tline)
+%     ix = ix+1;
+%     tline = fgetl(globalsID);
+%     globalsTxt{ix} = tline;
+% end
