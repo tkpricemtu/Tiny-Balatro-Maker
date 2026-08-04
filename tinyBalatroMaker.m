@@ -36,19 +36,19 @@ buttonCBTxt = readlines(buttonCBFN);
 % globalsTxt{274}(21) = '7';
 % globalsTxt{275}(21) = '7';
 % 
-% overwrite font
+% overwrite font WORKS
 newfont = 'Images\NotoSans-CondensedBold.ttf';
 movefile('UnzipLocation\resources\fonts\m6x11plus.ttf','UnzipLocation\resources\fonts\m6x11plusOLD.ttf');
 copyfile(newfont,'UnzipLocation\resources\fonts\m6x11plus.ttf')
  
-% % increase overall text size by 40%
+% increase overall text size by 40% WORKS
 gameTxt{969} = [gameTxt{969}(1:155) '4' gameTxt{969}(156:end)];
 gameTxt{975} = [gameTxt{975}(1:153) '4' gameTxt{975}(154:end)];
-% 
-% % increase scale of tooltips
-% miscTxt{1761} = [miscTxt{1761} '*1.13'];
-% 
-% % increase font of the card count indicators from 0.3 to 0.42 WORKS
+
+% increase scale of tooltips WORKS
+miscTxt{1761} = [miscTxt{1761} '*1.13'];
+
+% increase font of the card count indicators from 0.3 to 0.42 WORKS
 cardareaTxt{285} = [cardareaTxt{285}(1:101) '42' cardareaTxt{285}(103:end)]; % card count font scale
 cardareaTxt{286} = [cardareaTxt{286}(1:62)  '42' cardareaTxt{286}(64:end)];  % slash font scale
 cardareaTxt{287} = [cardareaTxt{287}(1:101) '42' cardareaTxt{287}(103:end)]; % card limit font scale
@@ -87,22 +87,22 @@ cardareaTxt{474} = [cardareaTxt{474}(1:80) cardareaTxt{474}(end-28:end)];
 cardareaTxt{486} = [cardareaTxt{486}(1:180) cardareaTxt{486}(end-19:end)];
 cardareaTxt{489} = [cardareaTxt{489}(1:81) cardareaTxt{489}(end-28:end)];
 % 
-% % swap x and y to match switch controls
+% swap x and y to match switch controls DOESN'T WORK
 % globalsTxt{30}(30:34) = 'true ';
 % UIdefTxt{6131} = [UIdefTxt{6132}(1:12) 'G.F_SWAP_XY_BUTTONS and 3 or 2,'];
 % UIdefTxt{6132} = [UIdefTxt{6132}(1:12) 'G.F_SWAP_XY_BUTTONS and 2 or 3,'];
+
+% increase button size by 40%
+UIdefTxt{6149} = [UIdefTxt{6149}(1:35) '(' UIdefTxt{6149}(36:53) ...
+    ')*1.4,(' UIdefTxt{6149}(55:72) ')*1.4,' UIdefTxt{6149}(74:end)] ;
 % 
-% % increase button size by 40%
-% UIdefTxt{6149} = [UIdefTxt{6149}(1:35) '(' UIdefTxt{6149}(36:53) ...
-%     ')*1.4,(' UIdefTxt{6149}(55:72) ')*1.4,' UIdefTxt{6149}(74:end)] ;
-% 
-% % shift Play/Discard buttons down
-% buttonCBTxt{832} = [buttonCBTxt{832}(1:44) '-0.9' ...
-%     buttonCBTxt{832}(46:48) '1.3' buttonCBTxt{832}(52:end)];
-% gameTxt{3049} = [gameTxt{3049}(1:46) '-0.9' gameTxt{3049}(48:50) ...
-%     '1.3' gameTxt{3049}(54:end)]; 
-% 
-% % increase size of Play/Discard buttons by 20%
+% % shift Play/Discard buttons down and to the left WORKS
+buttonCBTxt{832} = [buttonCBTxt{832}(1:44) '-0.9' ...
+    buttonCBTxt{832}(46:48) '1.3' buttonCBTxt{832}(52:end)];
+gameTxt{3049} = [gameTxt{3049}(1:46) '-0.9' gameTxt{3049}(48:50) ...
+    '1.3' gameTxt{3049}(54:end)]; 
+ 
+% increase size of Play/Discard buttons by 20%  - don't need it
 % UIdefTxt{987} = [UIdefTxt{987} '*1.2'];
 % UIdefTxt{988} = [UIdefTxt{988} '*1.2'];
 % UIdefTxt{989} = [UIdefTxt{989}(1:88) '*1.2' UIdefTxt{989}(89:103) ...
@@ -110,7 +110,7 @@ cardareaTxt{489} = [cardareaTxt{489}(1:81) cardareaTxt{489}(end-28:end)];
 % UIdefTxt{995} = [UIdefTxt{995}(1:96) '*1.2' UIdefTxt{995}(97:117) ...
 %     '*1.2' UIdefTxt{995}(118:end)];
 % 
-% % increase size of Rank/Suit sorting by 20%
+% % increase size of Rank/Suit sorting by 20%  - don't need it
 % UIdefTxt{1002} = [UIdefTxt{1002}(1:64) '*1.2' UIdefTxt{1002}(65:79)...
 %     '*1.2' UIdefTxt{1002}(80:end)];
 % UIdefTxt{1005} = [UIdefTxt{1005}(1:57) '*1.2' UIdefTxt{1005}(58:end)];
@@ -120,36 +120,39 @@ cardareaTxt{489} = [cardareaTxt{489}(1:81) cardareaTxt{489}(end-28:end)];
 % UIdefTxt{1014} = [UIdefTxt{1014}(1:60) '*1.2' UIdefTxt{1014}(61:72) ...
 %     '*1.2' UIdefTxt{1014}(73:87) '*1.2' UIdefTxt{1014}(88:end)];
 % 
-% % increase size of the Sell and Use buttons, adjust for no overlap
-% UIdefTxt{422} = [UIdefTxt{422}(1:84) '.3' UIdefTxt{422}(85:158) ...
-%     '9' UIdefTxt{422}(160:164) '.4' UIdefTxt{422}(165:end-5) ...
-%     '0.1' UIdefTxt{422}(end)];
-% UIdefTxt{425} = [UIdefTxt{425}(1:55) '6' UIdefTxt{425}(57:end)];
-% UIdefTxt{428} = [UIdefTxt{428}(1:56) '.3' UIdefTxt{428}(57:end)];
-% UIdefTxt{438}(140) = '9';
-% UIdefTxt{438}(171) = '9';
+% increase size of the Sell and Use buttons, adjust for no overlap
+% minw = 1.3, 'sell' and 1.9 or 1.4
+UIdefTxt{422} = [UIdefTxt{422}(1:84) '.3' UIdefTxt{422}(85:158) ...
+    '9' UIdefTxt{422}(160:164) '.4' UIdefTxt{422}(165:end)];
+% minh = 0.6
+UIdefTxt{425} = [UIdefTxt{425}(1:55) '6' UIdefTxt{425}(57:end)];
+% maxw = 1.3
+UIdefTxt{428} = [UIdefTxt{428}(1:56) '.3' UIdefTxt{428}(57:end)];
+% change 0.6 and -0.6 to 1.3 and -1.3
+UIdefTxt{438}(138:140) = '1.3';
+UIdefTxt{438}(169:171) = '1.3';
 % 
 % % move main menu UI elements down
-commonTxt{758} = [commonTxt{758}(1:end-1) '1.3'];
-commonTxt{767} = [commonTxt{767}(1:65) '1.3' commonTxt{767}(67:end)];
+commonTxt{758} = [commonTxt{758}(1:end-1) '1.6'];
+commonTxt{767} = [commonTxt{767}(1:65) '1.6' commonTxt{767}(67:end)];
 % 
-% % increase size of main menu logo
+% increase size of main menu logo
 gameTxt{1569}  = [gameTxt{1569}(1:23) '21' gameTxt{1569}(25:end)];
-% 
-% % move version number up
+
+% move version number up
 gameTxt{1712}  = [gameTxt{1712}(1:47) '-1.6' gameTxt{1712}(49:end)];
-% adjust width of Joker and Consumable boxes
+%adjust width of Joker and Consumable boxes
 gameTxt{2228} = [gameTxt{2228}(1:18) '5.29' gameTxt{2228}(22:end)];
 gameTxt{2230} = [gameTxt{2230}(1:24) '1.96' gameTxt{2230}(28:end)];
 
 % overwrite the default cards with the "Grandma mode" cards in resources
 movefile('UnzipLocation/resources/textures/1x/8BitDeck_opt2.png',...
     'UnzipLocation/resources/textures/1x/8BitDeck_opt2OLD.png')
-copyfile('Images/BalatroGrandmaH1.png',...
+copyfile('Images/BalatroGrandmaH1a.png',...
     'UnzipLocation/resources/textures/1x/8BitDeck_opt2.png')
 movefile('UnzipLocation/resources/textures/2x/8BitDeck_opt2.png',...
     'UnzipLocation/resources/textures/2x/8BitDeck_opt2OLD.png')
-copyfile('Images/BalatroGrandmaH2.png',...
+copyfile('Images/BalatroGrandmaH2a.png',...
     'UnzipLocation/resources/textures/2x/8BitDeck_opt2.png')
 
 %% write files
