@@ -1,4 +1,6 @@
 function unzipme
+% This script does everything needed to unzip the files hidden in 
+
 if isfile('Balatro.exe')
     % Rename 'Balatro.exe' to 'Balatro.zip'
     movefile('Balatro.exe','BalatroOLD.exe');

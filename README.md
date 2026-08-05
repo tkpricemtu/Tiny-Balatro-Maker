@@ -12,7 +12,17 @@ Instructions:
 
 -Run "tinyBalatroMaker.m"
 
-This will create a new version of "Balatro.exe" that can be dragged into the Portmaster folder, or can be used in creating an apk for Andriod installations. 
 
-The changes made to the game are all aesthetic, nothing will changes mechanically. These changes include
+This will create a new version of "Balatro.exe" that can be dragged into the Portmaster folder, or can be used in creating an apk for Andriod installations. If this is satisfactory, you can delete both "Balatro.exe" and "BalatroOLD.exe"
+
+
+The changes made to the game are all aesthetic, nothing will changes mechanically. These changes include but are not limited to:
+
+-Replaced the high visibility cards with a version I made that just has a number/letter and a suit to improve visibility
+
+-Adjusted UI positions to account for the 4:3 screen and larger font
+
+-Changed the default font used
+
+-Changed various font sizes
 

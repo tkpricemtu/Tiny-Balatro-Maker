@@ -6,6 +6,10 @@
 % be substituted for the vanilla Balatro.exe when installing the Portmaster
 % port or using the Android apk generator. These are the requirements:
 % - Balatro.exe must be in the same folder as this script
+% - NotoSans-CondensedBold.ttf must be in the Images folder. I probably
+% should've called this folder "Assets" or something but I don't feel like
+% changing it. 
+
 clc
 clearvars
 close all
@@ -32,28 +36,25 @@ commonTxt   = readlines(commonFN);
 buttonCBTxt = readlines(buttonCBFN);
 
 %% changes
-% changing the scaling of the cards from 2.4 to 2.7 on lines 274 and 275
-% globalsTxt{274}(21) = '7';
-% globalsTxt{275}(21) = '7';
-% 
-% overwrite font WORKS
+
+% overwrite font 
 newfont = 'Images\NotoSans-CondensedBold.ttf';
 movefile('UnzipLocation\resources\fonts\m6x11plus.ttf','UnzipLocation\resources\fonts\m6x11plusOLD.ttf');
 copyfile(newfont,'UnzipLocation\resources\fonts\m6x11plus.ttf')
  
-% increase overall text size by 40% WORKS
+% increase overall text size by 40%
 gameTxt{969} = [gameTxt{969}(1:155) '4' gameTxt{969}(156:end)];
 gameTxt{975} = [gameTxt{975}(1:153) '4' gameTxt{975}(154:end)];
 
-% increase scale of tooltips WORKS
+% increase scale of tooltips
 miscTxt{1761} = [miscTxt{1761} '*1.13'];
 
-% increase font of the card count indicators from 0.3 to 0.42 WORKS
+% increase font of the card count indicators from 0.3 to 0.42
 cardareaTxt{285} = [cardareaTxt{285}(1:101) '42' cardareaTxt{285}(103:end)]; % card count font scale
 cardareaTxt{286} = [cardareaTxt{286}(1:62)  '42' cardareaTxt{286}(64:end)];  % slash font scale
 cardareaTxt{287} = [cardareaTxt{287}(1:101) '42' cardareaTxt{287}(103:end)]; % card limit font scale
  
-% adjust location and font size of peek deck indicator WORKS
+% adjust location and font size of peek deck indicator
 cardareaTxt{371} = [cardareaTxt{371}(1:72) '2' cardareaTxt{371}(73:end)];    % increase padding from 0.1 to 0.12
 cardareaTxt{372} = [cardareaTxt{372}(1:199) '72' cardareaTxt{372}(201:end)]; % increase button scale from 0.6 to 0.72
 cardareaTxt{374} = [cardareaTxt{374}(1:77) '576' cardareaTxt{374}(80:end)];  % increase "peek" text from 0.48 to 0.576
@@ -61,11 +62,11 @@ cardareaTxt{377} = [cardareaTxt{377}(1:77) '456' cardareaTxt{377}(80:end)];  % i
 cardareaTxt{381}(57) = '3'; % change x offset from x=-0.5 to x=-0.3
 cardareaTxt{381}(61) = '1'; % change y offset from y=0.1 to y=1.1
 % 
-% % adjust location of blind marquee WORKS
+% % adjust location of blind marquee
 blindTxt{126}    = [blindTxt{126}(1:end-1) '-0.8']; % change y offset
 blindTxt{748}    = [blindTxt{748}(1:end-1) '-0.8']; % change y offset
  
-% adjust joker, deck and consumable spots WORKS
+% adjust joker, deck and consumable spots
 commonTxt{9}     = [commonTxt{9}(1:end-5) '+ 0.2']; % change x offset of jokers
 commonTxt{10}    = [commonTxt{10}(1:end-1) '-1.9']; % change y offset of jokers
 commonTxt{13}    = [commonTxt{13}(1:end-1) '-1.9']; % change y offset of consumables
@@ -74,14 +75,14 @@ commonTxt{15}    = [commonTxt{15}(1:end-1) '5'];    % change x offset of deck
 % reduced number of the cash out dots, was causing issues
 commonTxt{940} = [ commonTxt{940}(1:78) '........' commonTxt{940}(117:end)];
 
-% remove rotation of the cards by setting the card.T.r values to 0 WORKS
+% remove rotation of the cards by setting the card.T.r values to 0 
 cardareaTxt{439} = cardareaTxt{439}(1:28);
 cardareaTxt{454} = cardareaTxt{454}(1:28);
 cardareaTxt{469} = cardareaTxt{469}(1:28);
 cardareaTxt{484} = cardareaTxt{484}(1:28);
 cardareaTxt{512} = cardareaTxt{512}(1:28);
 
-% flatten cards in hand to all have the same height WORKS
+% flatten cards in hand to all have the same height
 cardareaTxt{444} = [cardareaTxt{444}(1:73) '- 0.3'];
 cardareaTxt{460} = [cardareaTxt{460}(1:81) '- 0.2'];
 cardareaTxt{474} = [cardareaTxt{474}(1:80) cardareaTxt{474}(end-28:end)];
@@ -134,8 +135,7 @@ UIdefTxt{1341} = [UIdefTxt{1341}(1:98) 'minh = 3.2, ', UIdefTxt{1341}(99:end)];
 % shift blind alignment down
 UIdefTxt{1405} = [UIdefTxt{1405}(1:80) '.2' UIdefTxt{1405}(84:end)];
 
-
-% overwrite the default cards with the "Grandma mode" cards in resources
+% overwrite the default high visibility cards with the "Grandma mode" cards in resources
 movefile('UnzipLocation/resources/textures/1x/8BitDeck_opt2.png',...
     'UnzipLocation/resources/textures/1x/8BitDeck_opt2OLD.png')
 copyfile('Images/BalatroGrandmaH1b.png',...
@@ -160,16 +160,50 @@ zip('Balatro.zip','*','UnzipLocation');
 movefile('Balatro.zip','Balatro.exe');
 cleanrepo
 
+%% Functions
 
+function unzipme
+% This script does everything needed to unzip the files hidden in 
 
-%% Old
-%% open globals.lua
-% globalsID = fopen('UnzipLocation/globals.lua','w');
-% ix = 1;
-% tline = fgetl(globalsID);
-% globalsTxt{ix} = tline;
-% while ischar(tline)
-%     ix = ix+1;
-%     tline = fgetl(globalsID);
-%     globalsTxt{ix} = tline;
-% end
+if isfile('Balatro.exe')
+    % Rename 'Balatro.exe' to 'Balatro.zip'
+    movefile('Balatro.exe','BalatroOLD.exe');
+end
+if isfile('BalatroOLD.exe')
+    copyfile('BalatroOLD.exe','BalatroOLD.zip');
+end
+if isfile('BalatroOLD.zip')
+    % Unzip 'Balatro.zip'
+    unzip('BalatroOLD.zip','UnzipLocation');
+end
+delete BalatroOLD.zip
+end
+
+function cleanrepo
+% delete everything in the UnzipLocation folder, there's probably a better
+% way to do this but this works
+delete('UnzipLocation/engine/*')
+rmdir UnzipLocation/engine
+delete('UnzipLocation/functions/*')
+rmdir UnzipLocation/functions
+delete('UnzipLocation/localization/*')
+rmdir UnzipLocation/localization
+delete('UnzipLocation/resources/fonts/*')
+rmdir UnzipLocation/resources/fonts
+delete('UnzipLocation/resources/shaders/*')
+rmdir UnzipLocation/resources/shaders
+delete('UnzipLocation/resources/sounds/*')
+rmdir UnzipLocation/resources/sounds
+delete('UnzipLocation/resources/textures/1x/collabs/*')
+rmdir UnzipLocation/resources/textures/1x/collabs
+delete('UnzipLocation/resources/textures/1x/*')
+rmdir UnzipLocation/resources/textures/1x
+delete('UnzipLocation/resources/textures/2x/collabs/*')
+rmdir UnzipLocation/resources/textures/2x/collabs
+delete('UnzipLocation/resources/textures/2x/*')
+rmdir UnzipLocation/resources/textures/2x
+rmdir UnzipLocation/resources/textures
+delete('UnzipLocation/resources/*')
+rmdir UnzipLocation/resources
+delete('UnzipLocation/*')
+end
