@@ -1,13 +1,13 @@
 function unzipme
 if isfile('Balatro.exe')
     % Rename 'Balatro.exe' to 'Balatro.zip'
-    movefile('Balatro.exe','Balatro2.exe');
+    movefile('Balatro.exe','BalatroOLD.exe');
 end
-if isfile('Balatro2.exe')
-    copyfile('Balatro2.exe','Balatro2.zip');
+if isfile('BalatroOLD.exe')
+    copyfile('BalatroOLD.exe','BalatroOLD.zip');
 end
-if isfile('Balatro2.zip')
+if isfile('BalatroOLD.zip')
     % Unzip 'Balatro.zip'
-    unzip('Balatro2.zip','UnzipLocation');
+    unzip('BalatroOLD.zip','UnzipLocation');
 end
-delete Balatro2.zip
+delete BalatroOLD.zip
