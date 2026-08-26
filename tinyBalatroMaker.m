@@ -14,9 +14,11 @@ clc
 clearvars
 close all
 
-unzipme;
+
 
 %% open files
+unzipme;
+
 cardareaFN = 'UnzipLocation/cardarea.lua';
 gameFN     = 'UnzipLocation/game.lua';
 miscFN     = 'UnzipLocation/functions/misc_functions.lua';
@@ -132,8 +134,8 @@ UIdefTxt{875}(95:96) = '10';
 % increase minimum height of hand display 
 UIdefTxt{1341} = [UIdefTxt{1341}(1:98) 'minh = 3.2, ', UIdefTxt{1341}(99:end)];
 
-% shift blind alignment down
-UIdefTxt{1405} = [UIdefTxt{1405}(1:80) '.2' UIdefTxt{1405}(84:end)];
+% shift blind alignment down, 3.75 -> 4
+UIdefTxt{1405} = [UIdefTxt{1405}(1:79) '4.2' UIdefTxt{1405}(84:end)];
 
 % overwrite the default high visibility cards with the "Grandma mode" cards in resources
 movefile('UnzipLocation/resources/textures/1x/8BitDeck_opt2.png',...
@@ -144,6 +146,13 @@ movefile('UnzipLocation/resources/textures/2x/8BitDeck_opt2.png',...
     'UnzipLocation/resources/textures/2x/8BitDeck_opt2OLD.png')
 copyfile('Images/BalatroGrandmaH2b.png',...
     'UnzipLocation/resources/textures/2x/8BitDeck_opt2.png')
+
+% XY swap, personal preference
+UIdefTxt{6131} = [UIdefTxt{6131}(1:end-2) 'G.F_SWAP_XY_BUTTONS and 3 or 2,'];
+UIdefTxt{6132} = [UIdefTxt{6132}(1:end-2) 'G.F_SWAP_XY_BUTTONS and 2 or 3,'];
+globalsTxt{30}(30:34) = 'true ';
+% skip tutorial
+globalsTxt{14}(28:32) = 'true ';
 
 %% write files
 writelines(cardareaTxt,cardareaFN);
